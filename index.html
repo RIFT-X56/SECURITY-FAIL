@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vous avez vraiment cru que c'était VRAI !!!</title>
+<style>
+  :root {
+    --bg: #05060d;
+    --panel: #0b0f1d;
+    --green: #39ff14;
+    --cyan: #00f0ff;
+    --pink: #ff2bd6;
+    --text: #d6ffe9;
+    --muted: #7fa890;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  #rain { position: fixed; inset: 0; z-index: 0; opacity: .25; width: 100%; height: 100%; }
+  body::after { /* scanlines */
+    content: ""; position: fixed; inset: 0; z-index: 3; pointer-events: none;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,.18) 0 1px, transparent 1px 3px);
+  }
+  main, header, footer { position: relative; z-index: 2; }
+
+  .nick {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 4;
+    text-align: center; padding: 1rem;
+    font-size: clamp(1.1rem, 3vw, 1.8rem); font-weight: bold; letter-spacing: .25em;
+    color: var(--pink);
+    text-shadow: 0 0 6px var(--pink), 0 0 18px var(--pink), 0 0 36px #a0007f;
+  }
+  header {
+    min-height: 100vh;
+    display: grid; place-content: center; text-align: center;
+    padding: 2rem 1rem;
+  }
+  .prompt { color: var(--green); letter-spacing: .2em; font-size: .9rem; margin-bottom: 1.5rem; }
+  .prompt::after { content: "▮"; animation: blink 1s steps(1) infinite; margin-left: .3rem; }
+  h1.glitch {
+    font-size: clamp(2rem, 7vw, 5rem);
+    line-height: 1.1; margin: 0;
+    color: var(--cyan);
+    text-transform: uppercase;
+    text-shadow: 0 0 8px var(--cyan), 0 0 24px var(--cyan), 0 0 48px #0099aa;
+    position: relative;
+  }
+  h1.glitch::before, h1.glitch::after {
+    content: attr(data-text); position: absolute; inset: 0; overflow: hidden;
+  }
+  h1.glitch::before { color: var(--pink); text-shadow: none; animation: glitch1 2.4s infinite linear alternate-reverse; clip-path: inset(0 0 55% 0); }
+  h1.glitch::after  { color: var(--green); text-shadow: none; animation: glitch2 3s infinite linear alternate-reverse; clip-path: inset(55% 0 0 0); }
+  .sub { margin-top: 2rem; color: var(--muted); }
+  .scroll { margin-top: 3rem; color: var(--green); text-decoration: none; text-shadow: 0 0 8px var(--green); }
+  .scroll:hover, .scroll:focus-visible { color: var(--pink); text-shadow: 0 0 10px var(--pink); }
+
+  main { max-width: 1000px; margin: 0 auto; padding: 4rem 1rem; }
+  h2 {
+    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+    color: var(--green);
+    text-shadow: 0 0 10px var(--green);
+    border-bottom: 1px solid var(--green);
+    padding-bottom: .5rem; margin: 0 0 .5rem;
+  }
+  h2.alt { color: var(--pink); border-color: var(--pink); text-shadow: 0 0 10px var(--pink); }
+  .intro { color: var(--muted); margin: 0 0 2rem; }
+  section { margin-bottom: 5rem; }
+
+  ol { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 430px), 1fr)); }
+  li {
+    background: var(--panel);
+    border: 1px solid #1d3a2c;
+    border-left: 3px solid var(--green);
+    padding: 1rem 1.2rem;
+    border-radius: 4px;
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+  }
+  li:hover { transform: translateY(-3px); border-color: var(--green); box-shadow: 0 0 18px rgba(57,255,20,.45); }
+  .owasp li { border-left-color: var(--pink); border-color: #3a1d36; }
+  .owasp li:hover { border-color: var(--pink); box-shadow: 0 0 18px rgba(255,43,214,.45); }
+  .tag { display: inline-block; font-size: .75rem; color: var(--bg); background: var(--green); padding: 0 .5rem; border-radius: 2px; margin-right: .5rem; font-weight: bold; }
+  .owasp .tag { background: var(--pink); }
+  li h3 { margin: 0 0 .4rem; font-size: 1.05rem; color: var(--cyan); text-shadow: 0 0 6px rgba(0,240,255,.6); }
+  li p { margin: 0; font-size: .92rem; }
+
+  .warn { border: 1px dashed var(--cyan); padding: 1rem 1.2rem; color: var(--cyan); background: rgba(0,240,255,.05); }
+  footer { text-align: center; color: var(--muted); padding: 2rem 1rem 3rem; font-size: .85rem; }
+  footer a { color: var(--cyan); }
+
+  @keyframes blink { 50% { opacity: 0; } }
+  @keyframes glitch1 { 0%{transform:translate(0)} 20%{transform:translate(-4px,2px)} 40%{transform:translate(3px,-2px)} 60%{transform:translate(-2px,1px)} 80%{transform:translate(4px,0)} 100%{transform:translate(0)} }
+  @keyframes glitch2 { 0%{transform:translate(0)} 25%{transform:translate(4px,-2px)} 50%{transform:translate(-3px,2px)} 75%{transform:translate(2px,-1px)} 100%{transform:translate(0)} }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+    #rain { display: none; }
+  }
+</style>
+</head>
+<body>
+<canvas id="rain" aria-hidden="true"></canvas>
+
+<div class="nick" aria-label="Pseudo">Rift.XfivesiX</div>
+
+<header>
+  <div class="prompt">root@neonhack:~# access_granted</div>
+  <h1 class="glitch" data-text="Vous avez vraiment cru que c'était VRAI !!!">Vous avez vraiment cru que c'était VRAI !!!</h1>
+  <p class="sub">// Spoiler : c'était de l'ingénierie sociale.</p>
+  <a class="scroll" href="#social">[ ↓ descendre dans le terrier ]</a>
+</header>
+
+<main>
+  <section id="social">
+    <h2>&gt; Les 10 pratiques les plus courantes en ingénierie sociale</h2>
+    <p class="intro">Le maillon faible n'est presque jamais la machine : c'est la confiance, la peur, l'urgence et la curiosité.</p>
+    <ol>
+      <li><h3><span class="tag">01</span>Phishing (hameçonnage)</h3><p>E-mails imitant une banque, un service public ou un fournisseur pour voler identifiants et données via un faux lien ou une pièce jointe piégée.</p></li>
+      <li><h3><span class="tag">02</span>Spear phishing</h3><p>Hameçonnage ciblé et personnalisé (nom, poste, collègues) à partir d'informations glanées sur les réseaux sociaux et le site de l'entreprise.</p></li>
+      <li><h3><span class="tag">03</span>Vishing (appel téléphonique)</h3><p>Un faux conseiller bancaire, technicien ou agent du support appelle et presse la victime de « confirmer » un code ou d'installer un outil.</p></li>
+      <li><h3><span class="tag">04</span>Smishing (SMS)</h3><p>Faux SMS de colis bloqué, d'amende ou de compte suspendu avec un lien raccourci menant vers un site frauduleux.</p></li>
+      <li><h3><span class="tag">05</span>Pretexting (prétexte)</h3><p>Création d'un scénario crédible (auditeur, RH, prestataire) pour obtenir des informations ou des accès en jouant un rôle.</p></li>
+      <li><h3><span class="tag">06</span>Baiting (appât)</h3><p>Clé USB « oubliée » sur un parking, téléchargement gratuit ou offre alléchante qui installe un logiciel malveillant.</p></li>
+      <li><h3><span class="tag">07</span>Quid pro quo</h3><p>Promesse d'un service ou d'une aide en échange d'une information : faux support technique qui demande un mot de passe « pour dépanner ».</p></li>
+      <li><h3><span class="tag">08</span>Tailgating / piggybacking</h3><p>Entrer dans un local sécurisé en suivant un employé, les bras chargés ou badge « oublié », en comptant sur la politesse.</p></li>
+      <li><h3><span class="tag">09</span>Fraude au président (BEC / whaling)</h3><p>Usurpation d'un dirigeant ou d'un fournisseur pour exiger un virement urgent ou un changement de RIB, souvent sous pression de confidentialité.</p></li>
+      <li><h3><span class="tag">10</span>Watering hole &amp; scareware</h3><p>Compromission d'un site que la cible visite déjà, ou fausses alertes « votre PC est infecté » qui poussent à installer un faux antivirus.</p></li>
+    </ol>
+  </section>
+
+  <section id="owasp" class="owasp">
+    <h2 class="alt">&gt; OWASP Top 10 : les 10 risques les plus signalés</h2>
+    <p class="intro">Classement OWASP Top 10 (édition 2025) des risques de sécurité les plus critiques pour les applications web, établi à partir de données de vulnérabilités réelles.</p>
+    <ol>
+      <li><h3><span class="tag">A01</span>Broken Access Control</h3><p>Contrôles d'accès défaillants : un utilisateur accède à des données ou fonctions qui ne lui sont pas destinées (IDOR, élévation de privilèges).</p></li>
+      <li><h3><span class="tag">A02</span>Security Misconfiguration</h3><p>Paramètres par défaut, services inutiles, messages d'erreur verbeux, en-têtes de sécurité absents, stockage cloud ouvert.</p></li>
+      <li><h3><span class="tag">A03</span>Software Supply Chain Failures</h3><p>Dépendances, outils de build ou distributions compromis ou obsolètes : la chaîne d'approvisionnement logicielle devient le vecteur d'attaque.</p></li>
+      <li><h3><span class="tag">A04</span>Cryptographic Failures</h3><p>Données sensibles non chiffrées, algorithmes faibles, clés mal gérées ou transmission en clair.</p></li>
+      <li><h3><span class="tag">A05</span>Injection</h3><p>Données non fiables interprétées comme commandes : injection SQL, de commandes OS, XSS, LDAP, etc.</p></li>
+      <li><h3><span class="tag">A06</span>Insecure Design</h3><p>Failles de conception : absence de modélisation des menaces et de contrôles de sécurité prévus dès l'architecture.</p></li>
+      <li><h3><span class="tag">A07</span>Authentication Failures</h3><p>Mots de passe faibles, absence de MFA, sessions mal gérées, credential stuffing et force brute non limités.</p></li>
+      <li><h3><span class="tag">A08</span>Software or Data Integrity Failures</h3><p>Mises à jour, pipelines CI/CD ou données désérialisées non vérifiés : du code ou des données altérés sont acceptés.</p></li>
+      <li><h3><span class="tag">A09</span>Security Logging &amp; Alerting Failures</h3><p>Journaux insuffisants et pas d'alertes : les attaques passent inaperçues et la réponse à incident arrive trop tard.</p></li>
+      <li><h3><span class="tag">A10</span>Mishandling of Exceptional Conditions</h3><p>Erreurs et cas limites mal gérés (échec ouvert, fuite d'informations, plantages exploitables) qui contournent les protections.</p></li>
+    </ol>
+  </section>
+
+  <div class="warn">⚠ Page à visée pédagogique et de sensibilisation. Au moindre doute : ne cliquez pas, ne répondez pas, vérifiez par un canal officiel.</div>
+</main>
+
+<footer>
+  Source : <a href="https://owasp.org/Top10/" rel="noopener">owasp.org/Top10</a> · NeonHack // stay paranoid
+</footer>
+
+<script>
+(() => {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const c = document.getElementById('rain'), x = c.getContext('2d');
+  const chars = '01アイウエオカキクケコ{}<>/;$#';
+  let cols, drops;
+  function size() {
+    c.width = innerWidth; c.height = innerHeight;
+    cols = Math.floor(c.width / 16);
+    drops = Array.from({length: cols}, () => Math.random() * -50);
+  }
+  size(); addEventListener('resize', size);
+  setInterval(() => {
+    x.fillStyle = 'rgba(5,6,13,.12)'; x.fillRect(0, 0, c.width, c.height);
+    x.fillStyle = '#39ff14'; x.font = '16px monospace';
+    drops.forEach((y, i) => {
+      x.fillText(chars[Math.random() * chars.length | 0], i * 16, y * 16);
+      drops[i] = y * 16 > c.height && Math.random() > .975 ? 0 : y + 1;
+    });
+  }, 60);
+})();
+</script>
+</body>
+</html>
