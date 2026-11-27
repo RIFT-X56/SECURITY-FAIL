@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { SITE } from '../site';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).map((p) => ({
+  href: `/blog/${p.id}/`, title: p.data.title, description: p.data.description, kind: 'blog', date: p.data.date,
+}));
+const notes = (await getCollection('notes')).map((n) => ({
+  href: `/notes/${n.id}/`, title: n.data.title, description: n.data.description, kind: 'notes', date: n.data.updated,
+}));
+const latest = [
+  ...posts,
+  ...notes,
+  { href: '/labs/canular/', title: 'Vous avez vraiment cru que c’était VRAI !!!', description: 'Le lab de sensibilisation qui a lancé le site.', kind: 'labs', date: new Date('2026-11-27') },
+].sort((a, b) => b.date.getTime() - a.date.getTime()).slice(0, 3);
+---
+<Base rain>
+  <section class="hero-home">
+    <p class="prompt blink">root@neonhack:~# whoami</p>
+    <h1>{SITE.name}</h1>
+    <p class="lead">
+      J'apprends la cybersécurité et le pentesting, et je documente tout ici : ce que je construis, ce que je casse
+      (avec autorisation) et ce que j'en retiens.
+    </p>
+    <div class="btns">
+      <a class="btn" href="/projets/">./projets</a>
+      <a class="btn alt" href="/a-propos/">cat a-propos.txt</a>
+      <a class="btn alt" href={SITE.github} rel="noopener noreferrer">GitHub</a>
+    </div>
+  </section>
+
+  <h2>&gt; Derniers ajouts</h2>
+  <ul class="cards">
+    {latest.map((item) => (
+      <li class="card">
+        <div class="card-bar">~/{item.kind}</div>
+        <div class="card-body">
+          <h3><a href={item.href}>{item.title}</a></h3>
+          <p class="muted">{item.description}</p>
+        </div>
+      </li>
+    ))}
+  </ul>
+
+  <h2>&gt; Ce que tu trouveras ici</h2>
+  <ul class="cards">
+    <li class="card"><div class="card-bar">~/projets</div><div class="card-body"><h3><a href="/projets/">Projets</a></h3><p class="muted">Outils, thèmes et le code de ce site.</p></div></li>
+    <li class="card"><div class="card-bar">~/labs</div><div class="card-body"><h3><a href="/labs/">Labs</a></h3><p class="muted">Démos interactives qui tournent entièrement dans ton navigateur.</p></div></li>
+    <li class="card"><div class="card-bar">~/notes</div><div class="card-body"><h3><a href="/notes/">Notes</a></h3><p class="muted">Fiches de référence : OWASP, méthodologie, cheat sheets.</p></div></li>
+  </ul>
+</Base>

@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+# Brouillons et rapports non caviardés : ne jamais les mettre dans le dépôt
+brouillons/
+rapports-bruts/
+*.pdf.orig
+.DS_Store

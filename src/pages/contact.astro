@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site';
+---
+<Base title="Contact" description="Comment joindre XfivesiX Security.">
+  <article class="article">
+    <p class="crumb">~/contact</p>
+    <h1>Contact</h1>
+    <p class="lead">Le plus simple pour me joindre :</p>
+    <ul>
+      <li>GitHub : <a href={SITE.github} rel="noopener noreferrer">{SITE.github.replace('https://', '')}</a></li>
+    </ul>
+    <h2>&gt; Signaler une vulnérabilité sur ce site</h2>
+    <p>
+      Merci ! Utilise le signalement privé de GitHub, comme indiqué dans
+      <a href="/.well-known/security.txt">security.txt</a>. Détails sur la page <a href="/securite/">Sécurité</a>.
+    </p>
+  </article>
+</Base>

@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site';
+---
+<Base title="Sécurité" description="Les mesures de sécurité appliquées à xfivesecurity.dev et la politique de divulgation.">
+  <article class="article">
+    <p class="crumb">~/securite</p>
+    <h1>Sécurité du site</h1>
+    <p class="lead">
+      Un site de cybersécurité doit montrer l'exemple. Voici ce qui est en place, et comment le vérifier toi-même.
+    </p>
+    <h2>&gt; Ce qui est en place</h2>
+    <table>
+      <thead><tr><th>Mesure</th><th>Détail</th></tr></thead>
+      <tbody>
+        <tr><td>Site statique</td><td>Aucune base de données, aucun formulaire, aucun serveur applicatif.</td></tr>
+        <tr><td>HTTPS forcé</td><td>Le domaine <code>.dev</code> est dans la liste HSTS preload de tous les navigateurs.</td></tr>
+        <tr><td>Content-Security-Policy</td><td>Scripts, styles, polices et images uniquement depuis le site lui-même ; aucun script en ligne.</td></tr>
+        <tr><td>Zéro tiers</td><td>Pas de traceur, pas d'analytics, polices auto-hébergées.</td></tr>
+        <tr><td>Referrer-Policy</td><td><code>strict-origin-when-cross-origin</code></td></tr>
+        <tr><td>Chaîne de build</td><td>Dépendances aux versions exactes, actions GitHub épinglées par empreinte de commit.</td></tr>
+      </tbody>
+    </table>
+    <h2>&gt; Vérifie toi-même</h2>
+    <pre><code>curl -s https://xfivesecurity.dev | grep -i content-security-policy
+curl -s https://xfivesecurity.dev/.well-known/security.txt
+dig +short CAA xfivesecurity.dev</code></pre>
+    <h2>&gt; Politique de divulgation</h2>
+    <p>
+      Tu as trouvé une faille sur ce site ? Signale-la en privé via
+      <a href={`${SITE.repo}/security/advisories/new`} rel="noopener noreferrer">le signalement de vulnérabilité GitHub</a>.
+      Merci de ne pas la rendre publique avant correction, et de ne pas tester au-delà de ce site (pas de déni de service,
+      pas d'ingénierie sociale).
+    </p>
+    <p>Fichier machine : <a href="/.well-known/security.txt">/.well-known/security.txt</a> (RFC 9116).</p>
+  </article>
+</Base>

@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site';
+---
+<Base title="À propos" description="Qui est derrière XfivesiX Security et comment je travaille.">
+  <article class="article">
+    <p class="crumb">~/a-propos</p>
+    <h1>À propos</h1>
+    <p class="lead">
+      Je suis {SITE.handle}, derrière {SITE.name}. J'apprends la cybersécurité offensive et défensive, et ce site
+      est mon carnet de bord public.
+    </p>
+    <h2>&gt; Ce que je fais</h2>
+    <ul>
+      <li>Pentesting et labs (CTF, machines d'entraînement).</li>
+      <li>Bug bounty, dans le cadre de programmes autorisés.</li>
+      <li>Sensibilisation à l'ingénierie sociale et à la sécurité web.</li>
+      <li>Projets perso, comme le thème Windows Rift.X56.</li>
+    </ul>
+    <h2>&gt; Comment je travaille</h2>
+    <p>
+      Méthode avant outils : reconnaissance, hypothèses, preuve, puis la partie qui compte vraiment, expliquer
+      l'impact et comment corriger. Chaque writeup se termine par une section défense.
+    </p>
+    <h2>&gt; Éthique</h2>
+    <p>
+      Je ne teste que des cibles pour lesquelles j'ai une autorisation explicite : programmes de bug bounty,
+      plateformes d'entraînement et mes propres labs. Les rapports publiés ici sont caviardés et publiés avec
+      l'accord requis.
+    </p>
+  </article>
+</Base>

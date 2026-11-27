@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+const titre = "Vous avez vraiment cru que c'était VRAI !!!";
+---
+<Base title="Vous avez vraiment cru que c'était VRAI" description="Lab de sensibilisation à l'ingénierie sociale." rain>
+  <section class="hero">
+    <p class="prompt blink">root@neonhack:~# access_granted</p>
+    <h1 class="glitch" data-text={titre}>{titre}</h1>
+    <p class="muted">// Spoiler : c'était de l'ingénierie sociale.</p>
+    <p><a class="btn" href="#revelation">[ ↓ descendre dans le terrier ]</a></p>
+  </section>
+
+  <section id="revelation" class="article">
+    <h2>&gt; Pourquoi ça a marché</h2>
+    <p>
+      Un titre choc, de l'urgence, une promesse : c'est exactement la recette d'un message d'hameçonnage. Si tu as
+      eu envie de cliquer, c'est normal. C'est précisément le réflexe que les attaquants exploitent.
+    </p>
+    <p>Les quatre leviers à reconnaître :</p>
+    <ul>
+      <li><strong>L'urgence</strong> : « maintenant », « dernier avertissement ».</li>
+      <li><strong>L'autorité</strong> : une banque, un patron, un service public.</li>
+      <li><strong>La peur</strong> : compte bloqué, amende, virus.</li>
+      <li><strong>La curiosité</strong> : « vous n'allez pas croire… ».</li>
+    </ul>
+    <p class="btns">
+      <a class="btn" href="/blog/10-techniques-ingenierie-sociale/">Lire les 10 techniques et leurs parades</a>
+      <a class="btn alt" href="/notes/owasp-top-10-2025/">Fiche OWASP Top 10</a>
+    </p>
+    <div class="warn">
+      ⚠ Page à visée pédagogique et de sensibilisation. Au moindre doute : ne cliquez pas, ne répondez pas,
+      vérifiez par un canal officiel.
+    </div>
+  </section>
+</Base>
