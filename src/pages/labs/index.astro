@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+<Base title="Labs" description="Démos de sécurité interactives qui tournent entièrement dans le navigateur.">
+  <p class="crumb">~/labs</p>
+  <h1>Labs</h1>
+  <p class="lead">Des démos pour voir les attaques et les défenses de près.</p>
+  <div class="note">
+    Règle des labs : tout tourne dans ton navigateur. Aucune donnée n'est envoyée, aucune cible réelle n'est touchée.
+    Ouvre l'onglet Réseau des outils de développement pour le vérifier.
+  </div>
+  <ul class="cards">
+    <li class="card">
+      <div class="card-bar">ingénierie sociale</div>
+      <div class="card-body">
+        <h3><a href="/labs/canular/">Vous avez vraiment cru que c'était VRAI !!!</a></h3>
+        <p class="muted">La page qui a lancé le site : un piège, puis la révélation des 10 techniques.</p>
+        <ul class="tags"><li>social-engineering</li><li>sensibilisation</li></ul>
+      </div>
+    </li>
+  </ul>
+</Base>

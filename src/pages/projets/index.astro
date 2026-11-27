@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../site';
+---
+<Base title="Projets" description="Projets de XfivesiX Security : outils, thèmes et le code de ce site.">
+  <p class="crumb">~/projets</p>
+  <h1>Projets</h1>
+  <p class="lead">Ce que je construis. Chaque projet : le problème, la stack et ce que j'en ai appris.</p>
+  <ul class="cards">
+    <li class="card">
+      <div class="card-bar">windows · thème</div>
+      <div class="card-body">
+        <h3>Thème Windows Rift.X56</h3>
+        <p class="muted">Un thème Windows personnalisé à l'identité Rift.X56. Captures et téléchargement bientôt.</p>
+        <ul class="tags"><li>windows</li><li>design</li></ul>
+      </div>
+    </li>
+    <li class="card">
+      <div class="card-bar">web · sécurité</div>
+      <div class="card-body">
+        <h3><a href={SITE.repo} rel="noopener noreferrer">Ce site : xfivesecurity.dev</a></h3>
+        <p class="muted">
+          Site statique Astro sur GitHub Pages, sans base de données ni serveur applicatif. CSP stricte,
+          aucune ressource tierce, security.txt.
+        </p>
+        <p><a href="/securite/">Voir les mesures appliquées →</a></p>
+        <ul class="tags"><li>astro</li><li>csp</li><li>hardening</li></ul>
+      </div>
+    </li>
+  </ul>
+</Base>

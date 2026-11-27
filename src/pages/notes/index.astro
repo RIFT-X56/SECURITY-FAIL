@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const notes = (await getCollection('notes')).sort((a, b) => a.data.title.localeCompare(b.data.title, 'fr'));
+---
+<Base title="Notes" description="Fiches de référence en cybersécurité : OWASP, méthodologie, cheat sheets.">
+  <p class="crumb">~/notes</p>
+  <h1>Notes</h1>
+  <p class="lead">Ma base de connaissance : des fiches courtes que je mets à jour en avançant.</p>
+  <ul class="cards">
+    {notes.map((n) => (
+      <li class="card">
+        <div class="card-bar">{n.data.category}</div>
+        <div class="card-body">
+          <h3><a href={`/notes/${n.id}/`}>{n.data.title}</a></h3>
+          <p class="muted">{n.data.description}</p>
+        </div>
+      </li>
+    ))}
+  </ul>
+</Base>

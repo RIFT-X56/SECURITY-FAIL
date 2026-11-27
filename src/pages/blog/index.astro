@@ -1,0 +1,23 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const fmt = new Intl.DateTimeFormat('fr-CA', { dateStyle: 'long' });
+---
+<Base title="Blog" description="Articles de vulgarisation et retours d'expérience en cybersécurité.">
+  <p class="crumb">~/blog</p>
+  <h1>Blog</h1>
+  <p class="lead">Ce que j'apprends, expliqué simplement.</p>
+  <ul class="cards">
+    {posts.map((p) => (
+      <li class="card">
+        <div class="card-bar"><time datetime={p.data.date.toISOString()}>{fmt.format(p.data.date)}</time></div>
+        <div class="card-body">
+          <h3><a href={`/blog/${p.id}/`}>{p.data.title}</a></h3>
+          <p class="muted">{p.data.description}</p>
+          <ul class="tags">{p.data.tags.map((t) => <li>{t}</li>)}</ul>
+        </div>
+      </li>
+    ))}
+  </ul>
+</Base>
